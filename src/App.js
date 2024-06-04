@@ -1,23 +1,26 @@
-import logo from './logo.svg';
 import './App.css';
+import NavBar from './NavBar';
+import Dog from './Dog';
+import { Redirect, Switch, Route } from 'react-router-dom/cjs/react-router-dom.min';
+import dogList from './dogList';
 
 function App() {
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+      <h1>Dogs</h1>
+      <NavBar />
+      <Switch>
+        {dogList.map(dog => (
+          <Route
+            key={dog.name}
+            path={`/dogs/${dog.name.toLowerCase()}`}
+            render={() => (
+              <Dog name={dog.name} age={dog.age} src={dog.src} facts={dog.facts} />
+        )}
+          />
+        ))}
+        <Redirect to="/dogs" />
+      </Switch>
     </div>
   );
 }
